@@ -37,6 +37,9 @@
 	upperMiddleLeft = $04c8
 	middleLeft = $0590
 	lowerMiddleLeft = $0658
+
+	border = $d020
+	background = $d021
 	
 	saveStateX = $033c
 	saveStateY = $033c
@@ -56,6 +59,10 @@ main:
 	lda #0
 	ldx #0
 	ldy #0
+
+	; Change background color 0 ( black ).
+	sta border
+	sta background
 
 	pha
 
@@ -278,47 +285,6 @@ borderSides:
 	rts
 
 
-borderSide2:
-
-	php
-	pha
-
-	ldx #$0
-	ldy #$0
-	lda #$0
-
-	lda #$30
-
-	sta character
-	txa
-	adc #$27
-	tax
-
-	lda character
-	sta topLeft,x 
-
-	@loop2:
-
-	sta topLeft,x
-	
-	txa
-	adc #$27 
-	tax
-
-	lda character
-	sta topLeft,x
-
-	inx
-	iny
-
-	cpy #$5
-	bne @loop2
-
-	pla
-	plp
-
-	rts
-
 waitKey:
 
 	php
@@ -358,23 +324,6 @@ wait:
 	
 	ldx saveStateX
 	ldy saveStateY
-
-	pla
-	plp
-
-	rts
-
-printCorners:
-
-	php
-	pha
-	
-	lda #$41
-
-	sta topLeft
-	sta topRight
-	sta bottomLeft
-	sta bottomRight
 
 	pla
 	plp
